@@ -90,11 +90,11 @@ ggplot(evhoe, aes(x = year, y = biomass)) + geom_line(col=2, lwd = 1) +
 
 ## Initial SPiCT fit to the data.
 
-The data used is stored in two data frames, 'catch' and 'evhoe'. First we used these data frames to create a list with the shape required by SPiCT.  We use the 'check.inp' function from SPiCT library to check that the data is right. 
+The data used is stored in two data frames, 'catch' and 'evhoe'. First we used these data frames to create a list with the shape required by SPiCT.  We use the 'check.inp' function from SPiCT library to check that the data is right. We only consider the catch data in the last part of the series, because using the whole period SPiCT showed convergence problems.
 
 ```{r spict data}
-murDat <- list(obsC  = catch[,'area_total'],
-               timeC = catch[,'year'],
+murDat <- list(obsC  = catch[29:40,'area_total'],
+               timeC = catch[29:40,'year'],
                obsI  = evhoe[,'biomass'],
                timeI  = evhoe[,'year'])
 
@@ -108,7 +108,7 @@ Fit SPiCT model using the default settings and show the numeric output.
 
 ```{r initial fit}
  mur_spict <- fit.spict(murInp)
- capture.output(summary(mur_spict))
+summary(mur_spict)
 ```
 
 Plot the estimated biomass, absolute and relative, using the functions available in the package. Until the late 1990 the estimated biomass was very low. Then it started increasing until reaching the maximum in 2004. Afterwards it showed a decreasing trend. The biomass has been above Bmsy only in five years around 2004.
@@ -127,7 +127,7 @@ Now plot the fishing mortality using the `plotspict` function. The fishing morta
  plotspict.ffmsy(mur_spict, qlegend = FALSE)
 ```
 
-The uncertainty estimated by the model around the catch is very small. 
+The uncertainty estimated by the model around the catch: 
 ```{r fig:est_catch, fig.height= 10/2.54, fig.width =  8/2.54, fig.cap = 'Catch estimated by SPiCT. The horizontal line corresponds with the MSY.'}
  plotspict.catch(mur_spict, qlegend = FALSE)
 ```
@@ -135,41 +135,8 @@ The uncertainty estimated by the model around the catch is very small.
 
 A sensitivity analysis to the starting values was performed. The results converged to two different data sets with more or less the same probability. The one shown above and an alternative case which had very wide confidence intervals. Another excercise was done fixing some of the paramters to the values obtained in the fit above and the model was not able to reproduce the same estimates. The results obtained indicated a problem in adjusting the initial part of the series.In fact, in this part the only data available is the catch data and it may not be  very accurate. Hence it was decided to use the data since 1994 when evhoe abundance index was first available.
 
-
-## Final Assessment.
-
-The same analysis was conducted with the shortened series and the results were more robust. All the starting  values converged to the same estimates (as in the initial fit there were many iterations that did not converged) and when the initial parameters were fixed to the estimated ones or sliglthly modified the results were practically the same. This robustness allows us to obtain a random population using as a base the variance-covariance matrix estimated by SPiCT.
-
-Shorten the time series and fit SPiCT to the new data. 
-
-```{r spict ff}
-murDat$obsC  <- murDat$obsC[23:40]
-murDat$timeC <- murDat$timeC[23:40]
-mur_spict <- fit.spict(murDat)
-```
-
-Updated time series of biomass. The absolute values and trends obtained are quite similar to those obtained with the longer time series.
-
-```{r fig:ff_biomass, fig.height= 10/2.54, fig.width =  16/2.54, fig.cap = 'Relative Biomass estimated by SPiCT with shortened time series.'}
-par(mfrow = c(1,2))
- plotspict.bbmsy(mur_spict)
- plotspict.biomass(mur_spict, qlegend = FALSE, stamp = F)
-```
  
-For fishing mortality the same happens. The resulting time series are almost identical to those obtained in the initial fit.  
-```{r fig:ff_f, fig.height= 10/2.54, fig.width =  16/2.54, fig.cap = 'Absolute fishing mortality estimated by SPiCT.'}
-par(mfrow = c(1,2))
- plotspict.f(mur_spict, qlegend = FALSE)
- plotspict.ffmsy(mur_spict, qlegend = FALSE)
-
-```
-
-The uncertainty around catch is low with the new fit too.
-```{r fig:ff_catch, fig.height= 10/2.54, fig.width =  14/2.54, fig.cap = 'Catch estimated by SPiCT using the shortened time series. The horizontal line corresponds with the MSY.'}
- plotspict.catch(mur_spict, qlegend = FALSE)
-```
-
-According to the fit the production of the stock has been at its maximum in most of the series (see the Kobe plot below). However in the last years (2011, 2012 and 2015) the production has decreased as a result of a decrease in biomass.The productions has been high in the whole time series but the harvest rate has been also very high. As it can be shown in the Kobe plot the stock has been the over-exploited in most of the series and it  is currently in the worst shape. 
+According to the fit the production of the stock has been at its maximum around 2000. However in the last years, from 2011, the production has decreased as a result of a decrease in biomass.The productions has been high in the whole time series but the harvest rate has been also very high. As it is shown in the Kobe plot the stock has been the over-exploited in most of the series and it  is currently in the worst shape. 
 
 ```{r fig:kobe, fig.height= 10/2.54, fig.width =  16/2.54, fig.cap = 'Production curve estimated by SPiCT using the shortened time series.'}
 par(mfrow = c(1,2))
@@ -248,7 +215,8 @@ par(mfrow = c(1,1))
 Now we need the stock trajectories, abundances and fishing mortalities, consistent with the parameters generated in the multivariate random sampling. So we fit a SPiCT model to each sample fixing the parameters to  those obtained in the sampling. From each fit we extract the estimated abundance and catch and store them in a matrix that will be used later on to condition `FLBEIA`. To illustrate the example we use only 100 iterations but more iterations could be neccesary to obtain a good representation of the existing uncertainty.
 
 ```{r, message=FALSE }
-Best <- Cest <- matrix(NA, Niter, 18, dimnames = list(iter = 1:Niter, year = 1997:2014))
+Best <- matrix(NA, Niter, 18, dimnames = list(iter = 1:Niter, year = 1997:2014))
+Cest <- matrix(NA, Niter, length(murDat$obsC), dimnames = list(iter = 1:Niter, year =  murDat$timeC))
 
 for(i in 1:Niter){
   # The data is the same use in the base fit.
@@ -264,18 +232,18 @@ for(i in 1:Niter){
   mur_rand_fit <- fit.spict(murDat_rand)
   # Extract the parameters.
   Best[i,]  <- get.par("logB", mur_rand_fit, exp = TRUE)[(0:17)*16+1,2]
-  Cest[i,]  <- get.par("logCpred", mur_rand_fit, exp = TRUE)[,2]
+  Cest[i,]  <- get.par("logCpred", mur_rand_fit, exp = TRUE)[1: length(murDat$obsC),2]
 }
 ```
 
-Time series of biomass and catch for each of the iterations obtained in the previous step are shown in next figure. Although the variability in biomass is high the trends are similar. Only one of the interations shows significant discrepancies with the others. The variability in estimated catch is also significant. Only one of the interations shows significant discrepancies with the others. 
+Time series of biomass and catch for each of the iterations obtained in the previous step are shown in next figure. Although the variability in biomass is high the trends are similar. Only one of the iterations shows significant discrepancies with the others. The variability in estimated catch is also significant. Only one of the interations shows significant discrepancies with the others. 
 
 ```{r fig:randBC, fig.height= 14/2.54, fig.width =  16/2.54, fig.cap = 'Time series of the biomass and catch obtained in each of the iterations.'}
 RandPar_flbeia <- RandPar_flbeia[1:Niter,]
 
 par(mfrow = c(2,1))
 matplot(1997:2014,t(Best), type = 'l', main = 'Biomass', ylab = 'MT', xlab = "", lty = 1)
-matplot(1997:2014,t(Cest), type = 'l', main = 'Catch', ylab = 'MT', xlab = "", lty = 1)
+matplot(colnames(Cest),t(Cest), type = 'l', main = 'Catch', ylab = 'MT', xlab = "", lty = 1)
 
 ```
 
@@ -524,7 +492,7 @@ murBD <- FLBDsim(name = 'mur', desc = 'Striped Red Mullet in Bay of Biscay',
                  biomass= flq, catch = flq, uncertainty = flq, gB = flq)
 
 murBD@biomass[,ac(1997:2014)]      <- t(Best)
-murBD@catch[,ac(1997:2014)]        <- t(Cest)
+murBD@catch[,colnames(Cest)]        <- t(Cest)
 murBD@uncertainty[,ac(2014:2028)]  <- rlnorm(Niter*15,0,RandPar_SPict[valid_iters,'sdb']) 
 murBD@params[] <- expand(FLQuant(t(RandPar_flbeia[1:Niter,c(1,3,2)]),dim = c(3,1,1,1,1,Niter), 
                                  dimnames = list(par = c('r', 'K', 'p'), iter = 1:Niter)), 
@@ -679,7 +647,7 @@ The advice object is a list used to store the TACs and the quota shares along fl
 advice <- list(TAC = murBD@catch,  quota.share = list(mur = flq))
 dimnames(advice$TAC)[[1]] <- 'mur'
 quant(advice$TAC) <- 'stock'
-advice$TAC[,'2015'] <- mean(murDat$obsC[16:18]) # There is no TAC => last three year mean.
+advice$TAC[,'2015'] <- mean(murDat$obsC) # There is no TAC => historical mean
 dimnames(advice$quota.share[[1]])[[1]] <- 'fl'
 ```
 
