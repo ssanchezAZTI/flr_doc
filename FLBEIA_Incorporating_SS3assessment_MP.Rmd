@@ -669,7 +669,7 @@ plotfltSum( s0_flt, proj.yr=main.ctrl$sim.years[["initial"]])
 s0_risk  <- riskSum( s0, Bpa = c(PIL=PIL_ref.pts[["Bpa"]]), Blim = c(PIL=PIL_ref.pts[["Blim"]]), 
                      Prflim = c(INT = NA), 
                      scenario="hcrICES_assSS3")
-s0_risk$year <- as.numeric(ac(s0_risk$year))
+
 ggplot( data=s0_risk, aes(x=year, y=value, color=scenario)) +
   geom_line() +
   facet_wrap(~indicator, scales="free") +

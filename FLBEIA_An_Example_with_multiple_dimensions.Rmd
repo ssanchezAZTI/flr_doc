@@ -282,7 +282,7 @@ inds <- c('catch','nVessels', 'effort', 'grossValue')
 d <- rbind(subset(SM_flt,indicator  %in% inds ))
 d$indicator <- factor( d$indicator, levels=inds)
 d$scenario <- factor(d$scenario)
-d$year <- as.numeric(d$year)
+
 p <- ggplot( data=d, aes(x=year, y=value, color=fleet)) + 
   geom_line() + 
   facet_wrap(~ indicator, scales="free") + 
@@ -298,7 +298,7 @@ inds <- c('capacity', 'grossValue', 'costs', 'netProfit')
 d <- rbind(subset(SM_flt,indicator  %in% inds ))
 d$indicator <- factor( d$indicator, levels=inds)
 d$scenario <- factor(d$scenario)
-d$year <- as.numeric(d$year)
+
 p <- ggplot( data=d, aes(x=year, y=value, color=fleet)) + 
   geom_line() + 
   facet_wrap(~ indicator, scales="free") + 
@@ -376,7 +376,7 @@ inds <- c('capacity','costs', 'grossValue', 'gva')
 d <- rbind(subset(SM_flt,indicator  %in% inds ))
 d$indicator <- factor( d$indicator, levels=inds)
 d$scenario <- factor(d$scenario)
-d$year <- as.numeric(d$year)
+
 p <- ggplot( data=d, aes(x=year, y=value, color=fleet)) + 
   geom_line() + 
   facet_wrap(~ indicator, scales="free") + 
@@ -395,7 +395,7 @@ inds <- c('ssb','rec', 'biomass', 'catch')
 d <- rbind(subset(SM_bio,indicator  %in% inds ))
 d$indicator <- factor( d$indicator, levels=inds)
 d$scenario <- factor(d$scenario)
-d$year <- as.numeric(d$year)
+
 p <- ggplot( data=d, aes(x=year, y=value, color=stock)) + 
   geom_line() + 
   facet_wrap(~ indicator, scales="free") + 
@@ -422,7 +422,7 @@ inds <- c('tac')
 d <- rbind(subset(SM_adv,indicator  %in% inds ))
 d$indicator <- factor( d$indicator, levels=inds)
 d$scenario <- factor(d$scenario)
-d$year <- as.numeric(d$year)
+
 p <- ggplot( data=d, aes(x=year, y=value, color=stock)) + 
   geom_line() + 
   facet_wrap(~ indicator, scales="free") + 
@@ -493,7 +493,7 @@ inds <- c('price', 'catch', 'effort', 'capacity')
 d <- rbind(subset(SM_x,indicator  %in% inds & fleet == 'fl1' & stock == 'stk2'))
 d$indicator <- factor( d$indicator, levels=inds)
 d$scenario <- factor(d$scenario)
-d$year <- as.numeric(d$year)
+
 p <- ggplot( data=d, aes(x=year, y=value, color=scenario)) + 
   geom_line() + 
   facet_wrap(~ indicator, scales="free") + 
@@ -515,7 +515,7 @@ inds <- c('grossValue','costs','salaries','netProfit')
 d <- rbind(subset(SM_x,indicator  %in% inds ))
 d$indicator <- factor( d$indicator, levels=inds)
 d$scenario <- factor(d$scenario)
-d$year <- as.numeric(d$year)
+
 p <- ggplot( data=d, aes(x=year, y=value, color=scenario)) + 
   geom_line() + 
   facet_wrap(~ indicator, scales="free") + 
@@ -551,7 +551,7 @@ inds <- c('costs','fcosts','grossValue','netProfit')
 d <- rbind(subset(SM_x,indicator  %in% inds & fleet == 'fl1'))
 d$indicator <- factor( d$indicator, levels=inds)
 d$scenario <- factor(d$scenario)
-d$year <- as.numeric(d$year)
+
 p <- ggplot( data=d, aes(x=year, y=value, color=scenario)) + 
   geom_line() + 
   facet_wrap(~ indicator, scales="free") + 
@@ -587,7 +587,7 @@ inds <- c('costs','vcosts','grossValue','netProfit')
 d <- rbind(subset(SM_flt,indicator  %in% inds & fleet == 'fl2'),
             subset(SM_3_flt, indicator %in% inds  & fleet == 'fl2'))
 d$indicator <- factor( d$indicator, levels=inds)
-d$year <- as.numeric(d$year)
+
 p <- ggplot( data=d, aes(x=year, y=value, color=scenario)) + 
   geom_line() + 
   facet_wrap(~ indicator, scales="free") + 
@@ -623,7 +623,7 @@ inds <- c('costs','vcosts','grossValue','netProfit')
 d <- rbind(subset(SM_flt,indicator  %in% inds & fleet == 'fl1'),
             subset(SM_4_flt, indicator %in% inds  & fleet == 'fl1'))
 d$indicator <- factor( d$indicator, levels=inds)
-d$year <- as.numeric(d$year)
+
 p <- ggplot( data=d, aes(x=year, y=value, color=scenario)) + 
   geom_line() + 
   facet_wrap(~ indicator, scales="free") + 
@@ -731,7 +731,6 @@ inds <- c("capacity",'nVessels','effort','netProfit')
 d <- rbind(subset(SM_x,indicator  %in% inds & fleet == 'fl2'))
 d$indicator <- factor( d$indicator, levels=inds)
 d$scenario <- factor(d$scenario)
-d$year <- as.numeric(d$year)
 
 p <- ggplot( data=d, aes(x=year, y=value, color=scenario)) + 
   geom_line() + 

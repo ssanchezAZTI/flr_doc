@@ -397,9 +397,8 @@ s1_bio$scenario <- c('s1')
 s0_s1_bio <- rbind(s0_bio , s1_bio )
 unique(s0_s1_bio$scenario)
 head(s0_s1_bio)
-aux <- s0_s1_bio
-aux$year <- as.numeric(as.character(aux$year))
-p1 <- ggplot(data=aux , aes(x=year, y=value, color=scenario))+
+
+p1 <- ggplot(data=s0_s1_bio , aes(x=year, y=value, color=scenario))+
       geom_line()+
       facet_wrap(~indicator, scales="free")+
       geom_vline(xintercept = proj.yr, linetype = "longdash")+
@@ -446,9 +445,8 @@ s2_bio$scenario <- c('s2')
 s0_s2_bio <- rbind(s0_bio , s2_bio )
 unique(s0_s2_bio$scenario)
 head(s0_s2_bio)
-aux <- s0_s2_bio
-aux$year <- as.numeric(as.character(aux$year))
-p1 <- ggplot(data=aux , aes(x=year, y=value, color=scenario))+
+
+p1 <- ggplot(data=s0_s2_bio , aes(x=year, y=value, color=scenario))+
       geom_line()+
       facet_wrap(~indicator, scales="free")+
       geom_vline(xintercept = proj.yr, linetype = "longdash")+
@@ -483,9 +481,8 @@ s3_bio$scenario <- c('s3')
 s0_s3_bio <- rbind(s0_bio , s3_bio )
 unique(s0_s3_bio$scenario)
 head(s0_s3_bio)
-aux <- s0_s3_bio
-aux$year <- as.numeric(as.character(aux$year))
-p1 <- ggplot(data=aux , aes(x=year, y=value, color=scenario))+
+
+p1 <- ggplot(data=s0_s3_bio , aes(x=year, y=value, color=scenario))+
       geom_line()+
       facet_wrap(~indicator, scales="free")+
       geom_vline(xintercept = proj.yr, linetype = "longdash")+
@@ -537,9 +534,8 @@ s4_bio$scenario <- c('s4')
 s0_s4_bio <- rbind(s0_bio , s4_bio )
 unique(s0_s4_bio$scenario)
 head(s0_s4_bio)
-aux <- s0_s4_bio
-aux$year <- as.numeric(as.character(aux$year))
-p1 <- ggplot(data=aux , aes(x=year, y=value, color=scenario))+
+
+p1 <- ggplot(data=s0_s4_bio , aes(x=year, y=value, color=scenario))+
       geom_line()+
       facet_wrap(~indicator, scales="free")+
       geom_vline(xintercept = proj.yr, linetype = "longdash")+
@@ -585,9 +581,8 @@ s0_flt$scenario <- c('s0')
 s0_s5_flt <- rbind(s0_flt , s5_flt)
 unique(s0_s5_flt$scenario)
 head(s0_s5_flt)
-aux <- s0_s5_flt
-aux$year <- as.numeric(as.character(aux$year))
-p1 <- ggplot(data=aux , aes(x=year, y=value, color=scenario))+
+
+p1 <- ggplot(data=s0_s5_flt , aes(x=year, y=value, color=scenario))+
       geom_line()+
       facet_wrap(~indicator, scales="free")+
       geom_vline(xintercept = proj.yr, linetype = "longdash")+
@@ -630,9 +625,8 @@ s0_flt$scenario <- c('s0')
 s0_s6_flt <- rbind(s0_flt , s6_flt)
 unique(s0_s6_flt$scenario)
 head(s0_s6_flt)
-aux <- s0_s6_flt
-aux$year <- as.numeric(as.character(aux$year))
-p1 <- ggplot(data=aux , aes(x=year, y=value, color=scenario))+
+
+p1 <- ggplot(data=s0_s6_flt , aes(x=year, y=value, color=scenario))+
       geom_line()+
       facet_wrap(~indicator, scales="free")+
       geom_vline(xintercept = proj.yr, linetype = "longdash")+
@@ -746,7 +740,7 @@ print(p)
 
 ```{r echo=TRUE,  fig.width = 3.5, fig.height = 3, eval=TRUE}
 aux <-  subset(s0_it_fltQ, indicator=="netProfit")
-aux$year <- as.numeric(as.character(aux$year))
+
 p1 <- ggplot(data=aux , aes(x=year, y=q50, color=fleet))+
       geom_line()+
       geom_ribbon(aes(x=year, ymin=q05, ymax=q95, fill=fleet), alpha=0.5)+

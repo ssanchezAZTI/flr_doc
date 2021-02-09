@@ -246,7 +246,7 @@ s1_risk  <- riskSum(  s1, Bpa = c(stk1=Bpa.stk1), Blim = c(stk1=Blim.stk1), Prfl
 s1a_risk <- riskSum( s1a, Bpa = c(stk1=Bpa.stk1), Blim = c(stk1=Blim.stk1), Prflim = c(fl1 = 0), 
                      scenario='a4')
 s10_risk <- rbind( s1_risk, s1a_risk) # risk indicators
-s10_risk$year <- as.numeric(s10_risk$year)
+
 p <- ggplot( data=s10_risk, aes(x=year, y=value, color=scenario)) + 
   geom_line() +
   facet_wrap(~indicator, scales="free") + 
@@ -408,7 +408,7 @@ s2_risk  <- riskSum(  s2, Bpa = c(stk1=Bpa.stk1), Blim = c(stk1=Blim.stk1), Prfl
 s2a_risk <- riskSum( s2a, Bpa = c(stk1=Bpa.stk1), Blim = c(stk1=Blim.stk1), Prflim = c(fl1 = 0), 
                      scenario='E20')
 s20_risk <- rbind( s2_risk, s2a_risk) # risk indicators
-s20_risk$year <- as.numeric(s20_risk$year)
+
 p <- ggplot( data=s20_risk, aes(x=year, y=value, color=scenario)) + 
   geom_line() +
   facet_wrap(~indicator, scales="free") + 
@@ -558,7 +558,7 @@ s3_risk  <- riskSum(  s3, Bpa = c(stk1=Bpa.stk1), Blim = c(stk1=Blim.stk1), Prfl
 s3a_risk <- riskSum( s3a, Bpa = c(stk1=Bpa.stk1), Blim = c(stk1=Blim.stk1), Prflim = c(fl1 = 0), 
                      scenario='netBig')
 s30_risk <- rbind( s3_risk, s3a_risk) # risk indicators
-s30_risk$year <- as.numeric(s30_risk$year)
+
 p <- ggplot( data=s30_risk, aes(x=year, y=value, color=scenario)) + 
   geom_line() +
   facet_wrap(~indicator, scales="free") + 
@@ -787,8 +787,8 @@ plotbioSum( s40_bio, stk.nam='stk2', Blim=Blim.stk2, Bpa=Bpa.stk2,
 s40_mt <- rbind( mtSum(s4, scenario='closeNO', long = TRUE), 
                  mtSum(s4a, scenario='closeNorth', long = TRUE), 
                  mtSum(s4b, scenario='closeSson2', long = TRUE)) # indicators at fleet level
-s40_mt$year <- as.numeric(s40_mt$year)
 s40_mt$flmt <- paste( s40_mt$fleet, s40_mt$metier, sep='_')
+
 p <- ggplot( data=s40_mt, aes(x=year, y=value, color=scenario)) + 
   geom_line() +
   facet_grid(indicator ~ flmt, scales="free") +
@@ -812,7 +812,7 @@ s4b_risk <- riskSum( s4b, Bpa = c(stk1=Bpa.stk1,stk2=Bpa.stk2),
                      Blim = c(stk1=Blim.stk1,stk2=Blim.stk2), 
                      Prflim = c(fl1=0,fl2=0), scenario='closeSson2')
 s40_risk <- rbind( s4_risk, s4a_risk, s4b_risk) # risk indicators
-s40_risk$year <- as.numeric(s40_risk$year)
+
 p <- ggplot( data=subset(s40_risk,indicator=='pPrflim'), aes(x=year, y=value, color=scenario)) + 
   geom_line() +
   facet_grid(indicator ~ unit, scales="free") +
@@ -909,7 +909,7 @@ plotfltSum( s10_flt, proj.yr=oneItMainC$sim.years[['initial']])
 s1b_risk <- riskSum( s1b, Bpa = c(stk1=Bpa.stk1), Blim = c(stk1=Blim.stk1), Prflim = c(fl1 = 0), 
                      scenario='fTAC')
 s10_risk <- rbind( s10_risk, s1b_risk) # risk indicators
-s10_risk$year <- as.numeric(s10_risk$year)
+
 p <- ggplot( data=s10_risk, aes(x=year, y=value, color=scenario)) + 
   geom_line() +
   facet_wrap(~indicator, scales="free") + 
@@ -988,7 +988,7 @@ plotfltSum( s20_flt, proj.yr=oneItMainC$sim.years[['initial']])
 s2b_risk <- riskSum( s2b, Bpa = c(stk1=Bpa.stk1), Blim = c(stk1=Blim.stk1), Prflim = c(fl1 = 0), 
                      scenario='E50g')
 s20_risk <- rbind( s20_risk, s2b_risk) # risk indicators
-s20_risk$year <- as.numeric(s20_risk$year)
+
 p <- ggplot( data=s20_risk, aes(x=year, y=value, color=scenario)) + 
   geom_line() +
   facet_wrap(~indicator, scales="free") + 
@@ -1085,7 +1085,7 @@ plotfltSum( s30_flt, proj.yr=oneItMainC$sim.years[['initial']])
 s3b_risk <- riskSum( s3b, Bpa = c(stk1=Bpa.stk1), Blim = c(stk1=Blim.stk1), 
                      Prflim = c(fl1 = 0), scenario='netSmall')
 s30_risk <- rbind( s30_risk, s3b_risk) # risk indicators
-s30_risk$year <- as.numeric(s30_risk$year)
+
 p <- ggplot( data=s30_risk, aes(x=year, y=value, color=scenario)) + 
   geom_line() +
   facet_wrap(~indicator, scales="free") + 
@@ -1100,7 +1100,7 @@ print(p)
 
 # - risk
 s30_risk <- rbind( s30_risk, s3b_risk)
-s30_risk$year <- as.numeric(s30_risk$year)
+
 p <- ggplot( data=s30_risk, aes(x=year, y=value, color=scenario)) +
   geom_line() +
   # geom_ribbon(aes(x=year, ymin=q05, ymax=q95, fill=scenario), alpha=0.5) +
