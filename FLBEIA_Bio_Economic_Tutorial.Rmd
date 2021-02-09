@@ -72,7 +72,7 @@ It has to be noted that packages ```FLCore```, ```FLFleets``` and ```FLBEIA``` h
 Load all the necessary packages.
 ```{r, pkgs, results = "hide"}
 library(FLBEIA)
-library(FLBEIAShiny)
+library(FLBEIAshiny)
 library(ggplot2)
 ```
 

@@ -385,7 +385,7 @@ Plot biomass of s0 ("bevholtAR1") and biomass of s1 ("segreg"),
 temp <- cbind(matrix(B_flbeia(s0)), matrix(B_flbeia(s1)))
 matplot(temp, x = dimnames( B_flbeia(s1))$year, type = 'l', 
         xlab = 'Year', ylab = 'Biomass')
-legend('top', c('s0', 's1'), col = c('black','red'), lty = c(1,2))
+legend('top', c('s0', 's1'), col = c('black','red'), lty = c(1,2), box.col = "transparent")
 ```
 
 More plots using the function ```ggplot```,
@@ -434,7 +434,7 @@ Compare the results or indicators for scenarios s0 and s2.
 ```{r echo=TRUE,  fig.width = 3.5, fig.height = 3.5, eval=TRUE}
 temp <- cbind(matrix(B_flbeia(s0)), matrix(B_flbeia(s2)))
 matplot(temp, x = dimnames( B_flbeia(s0))$year, type = 'l', xlab = 'Year', ylab = 'Biomass')
-legend('top', c('s0', 's2'), col = c('black','red'), lty = c(1,2))
+legend('top', c('s0', 's2'), col = c('black','red'), lty = c(1,2), box.col = "transparent")
 
 ```
 
@@ -573,7 +573,7 @@ s5_flt    <- fltSum(s5, long = TRUE); s5_eff <- subset(s5_flt, indicator == 'eff
 
 temp <- cbind(s0_eff$value, s5_eff$value)
 matplot(temp, x = dimnames( B_flbeia(s0))$year, type = 'l', xlab = 'Year', ylab = 'Effort')
-legend('top', c('s0', 's5'), col = c('black','red'), lty = c(1,2))
+legend('topright', c('s0', 's5'), col = c('black','red'), lty = c(1,2), box.col = "transparent")
 ```
 
 ```{r echo=TRUE, eval=TRUE, results = "hide"}
@@ -616,7 +616,7 @@ s6_flt <- fltSum(s6, long = TRUE); s6_prof <- subset(s6_flt, indicator == 'gross
 temp <- cbind(s0_prof$value, s6_prof$value)
 matplot(temp[21:36,], x = dimnames(B_flbeia(s6))$year[21:36], type = 'l', 
         xlab = 'Year', ylab = 'Income')
-legend('bottom', c('s0', 's6'),col = c('black','red'), lty = c(1,2) )
+legend('bottomright', c('s0', 's6'),col = c('black','red'), lty = c(1,2), box.col = "transparent")
 ```
 
 
