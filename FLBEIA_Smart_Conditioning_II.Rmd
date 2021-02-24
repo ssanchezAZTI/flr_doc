@@ -295,7 +295,7 @@ To call the function 'create.fleets.arrays' to create the FLFleets object we hav
 *	Catch at age data is disaggregated but the segments dot not correspond exactly with the m?tiers/fleets considered in the case study.
 *	Catch at age data is only available at stock level.
 
-In each case the excel files must be named differently. In the first option, the most complete one, we need to provide an excel file for each fleet, and within the file there must be a sheet for each of the metiers as shown in Figure \ref{fig:CAA_opt1}. The file name must be equal to 'CAA_' followed by the name of the fleet and with the '.xlsx' suffix. In turn, the sheets of the excel file must match exactly the name fo the metiers.   
+In each case the excel files must be named differently. In the first option, the most complete one, we need to provide an excel file for each fleet and stock (targeted by this fleet), and within the file there must be a sheet for each of the metiers as shown in Figure \ref{fig:CAA_opt1}. The file name must be equal to 'caa_' followed by the name of the fleet, the text '_', the name of the stock and with the '.xlsx' suffix. In turn, the sheets of the excel file must match exactly the name of the metiers.   
 
 \begin{figure}
   \centering
@@ -304,7 +304,7 @@ In each case the excel files must be named differently. In the first option, the
       \label{fig:CAA_opt1}
 \end{figure}
 
-In the second option the catch at age data is provided at fleet level. As in option one the file name must be equal to 'CAA_' followed by the name of the fleet and with the '.xlsx' suffix. In this case the file must have only one sheet with the name of the fleet (Figure \ref{fig:CAA_opt2}). The partial catches at metier level, (metier catch divided by the fleet catch), are used to divided the overal catch at age by metier
+In the second option the catch at age data is provided at fleet level. As in option one the file name must be equal to 'caa_' followed by the name of the fleet and with the '.xlsx' suffix. In this case the file must have only one sheet with the name of the fleet (Figure \ref{fig:CAA_opt2}). The partial catches at metier level, (metier catch divided by the fleet catch), are used to divided the overal catch at age by metier
 
 \begin{figure}
   \centering
@@ -313,7 +313,7 @@ In the second option the catch at age data is provided at fleet level. As in opt
       \label{fig:CAA_opt2}
 \end{figure}
 
-The third option is quite useful because usually the catch at age data is available at different level. In this case only one file per stock is provided. The file name must be equal to 'CAA_' followed by the name of the *stock* and with the '.xlsx' suffix. Within the file each fleet must be named with the name of the fleet segment it represents (Figure \ref{fig:CAA_opt3}). Then, it is neccesary to inform R about the correspondence of the segments with the metiers in the FLFleet object as shown in Figure \ref{fig:CAA_opt3a}. Then, the partial catches at metier level are used to divided the overal catch at age by metier. Sometimes, in this case it is not easy to ensure that the catch at age obtained summing up the catch at age at fleet level corresponds exactly with the overall catch at age. Hence, there will be differences in the selection pattern of the fleet and the fishing mortality,
+The third option is quite useful because usually the catch at age data is available at different level. In this case only one file per stock is provided. The file name must be equal to 'caa_' followed by the name of the *stock* and with the '.xlsx' suffix. Within the file each fleet must be named with the name of the fleet segment it represents (Figure \ref{fig:CAA_opt3}). Then, it is neccesary to inform R about the correspondence of the segments with the metiers in the FLFleet object as shown in Figure \ref{fig:CAA_opt3a}. Then, the partial catches at metier level are used to divided the overal catch at age by metier. Sometimes, in this case it is not easy to ensure that the catch at age obtained summing up the catch at age at fleet level corresponds exactly with the overall catch at age. Hence, there will be differences in the selection pattern of the fleet and the fishing mortality,
 
 
 \begin{figure}
@@ -331,7 +331,7 @@ The third option is quite useful because usually the catch at age data is availa
       \label{fig:CAA_opt3a}
 \end{figure}
 
-Option 4 is the most basic option. The catch at age is provided at overall level and then it is divided among metiers assuming the same distribution by age. The partial catches at metier level are used to divided the overal catch at age by metier. The file name must be equal to 'CAA_' followed by the name of the *stock* and with the '.xlsx' suffix
+Option 4 is the most basic option. The catch at age is provided at overall level and then it is divided among metiers assuming the same distribution by age. The partial catches at metier level are used to divided the overal catch at age by metier. The file name must be equal to 'caa_' followed by the name of the *stock* and with the '.xlsx' suffix
 
 \begin{figure}
   \centering
@@ -408,13 +408,13 @@ validObject(fleets)
 ## The Economic  data.
 
 ### Price
-Once the FLFleets object has been created we can fillin the economic slots with the economic data. Price data is filled with the same function 'create.fleets.arrays'. We could have fill in the price dat together with the catch data. But we can do it separately as shown here. We have to turn of the  'update_catch_effort' and 'update_weight' arguments and turn on the 'update_price'. The conditionin of the price is done in the same way it is done for catch at age. Furthermore, the 4 options available for catch at age are also available for price. In this case we will use different options for each stock, for hake and monkfish the option 3 and for the megrims de option 4. In the case of price, in the data files there is only one matrix for the price and the shape is the same used for landings at age. 
+Once the FLFleets object has been created we can fillin the economic slots with the economic data. Price data is filled with the same function 'create.fleets.arrays'. We could have fill in the price dat together with the catch data. But we can do it separately as shown here. We have to turn of the  'update_catch_effort' and 'update_weight' arguments and turn on the 'update_price'. The conditionin of the price is done in the same way it is done for catch at age. Furthermore, the 4 options available for catch at age are also available for price, but in this case the file name must start by 'price_' (instead of 'caa_' that was used for catch information). In this case we will use different options for each stock, for hake and monkfish the option 3 and for the megrims de option 4. In the case of price, in the data files there is only one matrix for the price and the shape is the same used for landings at age. 
 
 ```{r price, echo=TRUE, eval=TRUE,  results = "hide"}
 # Update the object with the price data
 fleets <- create.fleets.arrays(flt_obj = fleets,
-                               price_objs = c('paa_HKE.xlsx', 'paa_MEG.xlsx', 
-                                              'paa_LDB.xlsx', 'paa_MON.xlsx'), 
+                               price_objs = c('price_HKE.xlsx', 'price_MEG.xlsx', 
+                                              'price_LDB.xlsx', 'price_MON.xlsx'), 
                                price_objs_path = file.path(tdir,'fleets/'), 
                                priceOpt = c(HKE = 3, LDB = 4, MEG = 4, MON = 3),
                                paa_flt_mt_correspondences = file.path(tdir,'fleets/price_correspondences.xlsx'),
