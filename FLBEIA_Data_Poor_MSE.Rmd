@@ -312,7 +312,7 @@ mat <- c(mat0, mat1, rep(1,na-2))
 ```
 
 ### Natural Mortality 
-To calculate fishing mortality we use the `M.empirical` function from `fishmethods` package. This functions provides several methods from literature to caculate natural mortality based on life-history parameters, sea water temperature and others. Given the data available we are able to apply si of the methods. Water temperature was taken from  \url{http://www.watertemperature.org/Bay-of-Biscay--Geo.html} and $t_{max}$ from ICES-FisMap. Roff's method produces a value that is too high, so we consider it not credible and take the mean of the other methods to condition the model.
+To calculate natural mortality we use the `M.empirical` function from `fishmethods` package. This functions provides several methods from literature to caculate natural mortality based on life-history parameters, sea water temperature and others. Given the data available we are able to apply six of the methods. Water temperature was taken from  \url{http://www.watertemperature.org/Bay-of-Biscay--Geo.html} and $t_{max}$ from ICES-FisMap. Roff's method produces a value that is too high, so we consider it not credible and take the mean of the other methods to condition the model.
 
 ```{r natmort, results = TRUE}
 Ms <- M.empirical(Linf = Linf, 

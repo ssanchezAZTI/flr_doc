@@ -1,6 +1,6 @@
 ---
 title: "Including SS3 assessment within the Management Procedure of FLBEIA"
-# author: "Sonia Sanchez and FLBEIA team"
+# author: "Sonia Sanchez-Maroño and FLBEIA team"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
   github_document:
@@ -835,7 +835,7 @@ This document is licensed under the [Creative Commons Attribution-ShareAlike 4.0
 
 **Leire Citores**. AZTI, Marine Research Unit. Txatxarramendi Ugartea z/g, 48395, Sukarrieta, Basque Country, Spain. https://www.azti.es/.
 
-**Sonia Sanchez**. AZTI, Marine Research Unit. Herrera Kaia, Portualdea z/g, 20110, Pasaia, Gipuzkoa, Spain. https://www.azti.es/.
+**Sonia Sanchez-Maroño**. AZTI, Marine Research Unit. Herrera Kaia, Portualdea z/g, 20110, Pasaia, Gipuzkoa, Spain. https://www.azti.es/.
 
 **FLBEIA team**. AZTI. Marine Reserach Unit. Txatxarramendi Ugartea z/g, 48395, Sukarrieta, Basque Country, Spain.
 http://flbeia.azti.es/. **Mail** flbeia@azti.es
